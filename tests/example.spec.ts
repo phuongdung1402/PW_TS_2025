@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 //fixture
-
 //Vòng đời của page 
 //Không cần tạo page => playwright sẽ tạo ra page cho mình
 //1.Khởi tạo : đầu tiên PW sẽ rạo ra browserContext ( giống như 1 profile riêng sạch sẽ) -> sau đó sẽ mở ra 1 page() - 1 tab mới hoàn toàn trống trong context đó
@@ -14,7 +13,6 @@ test('has title', async ({ page , context }) => {
   await playwrightPage.getByRole('button', {name: 'Search (Control+k)'}).click()
   await playwrightPage.getByRole('searchbox', {name: 'Search'}).fill('Locators')
   console.log('Tab 1 da go Locators vao o tim kiem ');
-  
 
   //Tab 2
   const hrmPage = await context.newPage()
