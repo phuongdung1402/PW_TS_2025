@@ -241,11 +241,36 @@ test('toContainClass', async ({page})=> {
 })
 
 
-// test('toHaveAttribute', async ({page})=> {
-//     await page.goto(DEMO_URL)
-//     await page.getByRole('link', {name: 'Bài 1: Auto-Wait Demo'}).click()
-//     await page.getByRole('button', {name: 'expect() có await'}).click()
-//     await page.locator("#btn-toggle-attr").click()
-//     await expect(page.locator('#avatar')).toHaveAttribute('alt', 'User Avatar')
+test('toHaveAttribute', async ({page})=> {
+    await page.goto(DEMO_URL)
+    await page.getByRole('link', {name: 'Bài 1: Auto-Wait Demo'}).click()
+    await page.getByRole('button', {name: 'expect() có await'}).click()
+    await page.locator("#btn-toggle-attr").click()
+    await expect(page.locator('#avatar')).toHaveAttribute('alt', 'User Avatar')
 
-// })
+})
+
+test('toHaveID', async ({page})=> {
+    await page.goto(DEMO_URL)
+    await page.getByRole('link', {name: 'Bài 1: Auto-Wait Demo'}).click()
+    await page.getByRole('button', {name: 'expect() có await'}).click()
+    
+    await expect(page.locator('#unique-id')).toHaveId('unique-id')
+})
+
+test('toBeInViewport', async ({page})=> {
+    await page.goto(DEMO_URL)
+    await page.getByRole('link', {name: 'Bài 1: Auto-Wait Demo'}).click()
+    await page.getByRole('button', {name: 'expect() có await'}).click()
+    await page.locator('#viewport-target').scrollIntoViewIfNeeded()
+    await expect(page.locator('#viewport-target')).toBeInViewport()
+})
+
+test('toHaveText and toContainText', async ({page})=> {
+    await page.goto(DEMO_URL)
+    await page.getByRole('link', {name: 'Bài 1: Auto-Wait Demo'}).click()
+    await page.getByRole('button', {name: 'expect() có await'}).click()
+    await page.locator('#btn-exact-text').click()
+    //await expect(page.locator('#status-text')).toHaveText('Success MessageData loaded successfully!')
+    await expect(page.locator('#status-text')).toContainText('Data loaded successfully!')
+})
