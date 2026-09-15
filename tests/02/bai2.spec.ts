@@ -39,44 +39,44 @@ import { performance } from 'node:perf_hooks'
 // })
 //})
 
-// const TARGET_URL = 'https://playwright.dev'
-// test('TC01 : Demo DOMCONTENTLOADED ', async ({ page }) => {
-//     console.log('DEMO WAIT UNTIL - Domcontentloaded - 01');
-//     const startTime = performance.now()
-//     await page.goto('https://playwright.dev', {waitUntil: 'domcontentloaded'})
-//     const endTime = performance.now()
-//     console.log(`Thoi gian hoan tat TC01 : ${endTime - startTime}`);
+const TARGET_URL = 'https://playwright.dev'
+test('TC01 : Demo DOMCONTENTLOADED ', async ({ page }) => {
+    console.log('DEMO WAIT UNTIL - Domcontentloaded - 01');
+    const startTime = performance.now()
+    await page.goto('https://playwright.dev', {waitUntil: 'domcontentloaded'})
+    const endTime = performance.now()
+    console.log(`Thoi gian hoan tat TC01 : ${endTime - startTime}`);
 
-//     const rootElement = page.locator('#__docusaurus')
-//     await expect(rootElement).toBeAttached()
-// })
-
-// test('TC02 : Demo Load ', async ({ page }) => {
-//     console.log('DEMO WAIT UNTIL - Load - 02');
-//     const startTime = performance.now()
-//     await page.goto('https://playwright.dev', )
-//     const endTime = performance.now()
-//     console.log(`Thoi gian hoan tat TC02 :  ${endTime - startTime}`);
-
-//     const searchBtn = page.getByRole('button', {name: 'Search (Control+k)' })
-//     await expect(searchBtn).toBeEnabled()
-// })
-
-// test('TC03 : Demo Networkidle ', async ({ page }) => {
-//     console.log('DEMO WAIT UNTIL - NetworkIDLE - 03');
-//     const startTime = performance.now()
-//     await page.goto('https://playwright.dev', {waitUntil : 'networkidle'} )
-//     const endTime = performance.now()
-//     console.log(`Thoi gian hoan tat TC03 : ${endTime - startTime}`);
-
-//     const searchBtn = page.getByRole('button', {name: 'Search (Control+k)' })
-//     await expect(searchBtn).toBeEnabled()
-// })
-
-test('Test web demo', async ({ page }) => {
-    await page.goto('https://demoapp-sable-gamma.vercel.app/');
-    await page.getByRole('link', { name: 'Bài 1: Auto-Wait Demo' }).click();
-    await page.getByRole('button', { name: 'history 📜 Phiên bản cũ' }).click();
-    //await page.getByRole('button', { name: 'Click Me!!' }).click({timeout: 500});
-    await expect(page.locator('#status')).toContainText('Button Clicked Successfully!');
+    const rootElement = page.locator('#__docusaurus')
+    await expect(rootElement).toBeAttached()
 })
+
+test('TC02 : Demo Load ', async ({ page }) => {
+    console.log('DEMO WAIT UNTIL - Load - 02');
+    const startTime = performance.now()
+    await page.goto('https://playwright.dev', )
+    const endTime = performance.now()
+    console.log(`Thoi gian hoan tat TC02 :  ${endTime - startTime}`);
+
+    const searchBtn = page.getByRole('button', {name: 'Search (Control+k)' })
+    await expect(searchBtn).toBeEnabled()
+})
+
+test('TC03 : Demo Networkidle ', async ({ page }) => {
+    console.log('DEMO WAIT UNTIL - NetworkIDLE - 03');
+    const startTime = performance.now()
+    await page.goto('https://playwright.dev', {waitUntil : 'networkidle'} )
+    const endTime = performance.now()
+    console.log(`Thoi gian hoan tat TC03 : ${endTime - startTime}`);
+
+    const searchBtn = page.getByRole('button', {name: 'Search (Control+k)' })
+    await expect(searchBtn).toBeEnabled()
+})
+
+// test('Test web demo', async ({ page }) => {
+//     await page.goto('https://demoapp-sable-gamma.vercel.app/');
+//     await page.getByRole('link', { name: 'Bài 1: Auto-Wait Demo' }).click();
+//     await page.getByRole('button', { name: 'history 📜 Phiên bản cũ' }).click();
+//     //await page.getByRole('button', { name: 'Click Me!!' }).click({timeout: 500});
+//     await expect(page.locator('#status')).toContainText('Button Clicked Successfully!');
+// })
