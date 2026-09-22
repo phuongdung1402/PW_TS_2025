@@ -46,7 +46,6 @@ test('Hover trong PW 01', async ({ page }) => {
 // })
 
 // thẻ span ko có event listener hay thuộc tính disable -> nên khi mà disable thẻ , vẫn có thể click được
-
 test('Click element thật và giả', async ({ page }) => {
     await page.goto('https://demoapp-sable-gamma.vercel.app/')
     await page.getByRole('link', { name: 'Bài 4: Mouse Actions' }).click()
@@ -78,12 +77,11 @@ test('Click nhiều button 1 lúc', async ({ page }) => {
     for (const f of files) {
         await page.getByRole('button', { name: f }).click()
     }
-
     await expect(page.locator('#ac-selected-count-advanced')).toContainText('Selected: 5 items')
     await page.locator('#ac-process').click()
     const successMessage = page.locator('.ant-space-item .ant-alert-message')
 
-    await expect(successMessage).toContainText('Processing Complete!')
+    await expect(successMessage).toHaveText('Processing Complete!')
     await page.pause()
 })
 
@@ -95,7 +93,7 @@ test('keyboard actions', async ({ page }) => {
     await page.getByRole('tab', { name: '⌨️ Keyboard Actions' }).click()
 
     // // Nhấn phím Enter
-    // await page.locator('input').press('Enter')
+   //await page.locator('input').press('Enter')
 
     // //  // Nhấn phím Delete
     // await page.locator('input').press('Delete')
@@ -116,6 +114,7 @@ test('keyboard actions', async ({ page }) => {
     // await page.locator('input').press('Space')
 
 
+    //------------------------------------------------------------------------------------------
     // const areaInput = page.getByPlaceholder('Vùng text cho Demo 4');
     // await areaInput.click()
     // await page.keyboard.press('a')
@@ -127,17 +126,17 @@ test('keyboard actions', async ({ page }) => {
     // await page.keyboard.up('Shift')
     // await page.keyboard.type('the end')
 
-
+    //------------------------------------------------------------------------------------------
     //Focus vào textarea Demo 5
     // await page.locator('#demo5-textarea').click()
 
-    // //Select All , Copy , CUT , Paste
-    // await page.keyboard.press('Control+a')
-    // await page.keyboard.press('Control+c')
-    // await page.keyboard.press('Control+x')
-    // //await page.locator('#demo5-textarea').fill('ABC')
-    // await page.locator('#demo5-textarea').pressSequentially('Toi la super man', { delay: 1000 })
-    // await page.keyboard.press('Control+v')
-    // await page.pause()
+    //Select All , Copy , CUT , Paste
+    await page.keyboard.press('Control+a')
+    await page.keyboard.press('Control+c')
+    await page.keyboard.press('Control+x')
+    await page.locator('#demo5-textarea').fill('ABC')
+    await page.locator('#demo5-textarea').pressSequentially('Toi la super man', { delay: 1000 })
+    await page.keyboard.press('Control+v')
+    await page.pause()
 
 })
