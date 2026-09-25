@@ -86,15 +86,15 @@ test('Ví dụ về alert (Confirm - Prompt)', async ({page})=> {
     await page.getByRole('tab', {name:'⚠️ Alerts & Modals'}).click()
 
     // Alert confirm
-    // page.once('dialog', async (dialog)=> {
-    //     console.log(dialog.type())
-    //     expect(dialog.type()).toBe('confirm')
-    //     expect(dialog.message()).toContain('Are you sure')
-    // //    await dialog.accept()
-    //     await dialog.dismiss()
-    // })
-    // await page.locator('#btn-confirm').click()
-    // //expect(page.locator('#confirm-result')).toHaveText('Confirmed: YES')
+    page.once('dialog', async (dialog)=> {
+        console.log(dialog.type())
+        expect(dialog.type()).toBe('confirm')
+        expect(dialog.message()).toContain('Are you sure')
+        await dialog.accept()
+    //    await dialog.dismiss()
+    })
+    await page.locator('#btn-confirm').click()
+    expect(page.locator('#confirm-result')).toHaveText('Confirmed: YES')
     // expect(page.locator('#confirm-result')).toHaveText('Confirmed: NO')
 
 
@@ -135,7 +135,7 @@ test('Ví dụ về modal', async({page})=> {
     const dialog = page.getByRole('dialog', {name:'Thông báo'})
     await expect(dialog).toBeVisible()
     await dialog.locator('#basic-modal-input').fill('Alice')
-    await page.getByRole('button', {name: 'Đồng ý'}).click()
+    await dialog.getByRole('button', {name: 'Đồng ý'}).click()
     await expect(dialog).toHaveCount(0)
     await expect(page.locator('#basic-modal-result')).toHaveText('Submitted: Alice')
 
