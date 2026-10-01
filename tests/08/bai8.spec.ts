@@ -138,6 +138,19 @@ test('Ví dụ về iFrame', async ({ page }) => {
 
 
 //Evaluate : API cấp thấp để giao tiếp trực tiếp vs browser
+
+test('Ví dụ về evaluate - cú pháp cơ bản', async ({page})=> {
+    await page.goto('https://demoapp-sable-gamma.vercel.app/')
+    await page.getByRole('link', {name: 'Bài 5: Shadow DOM & iFrame'}).click()
+    await page.getByRole('tab', {name: '🔧 evaluate()'}).click()
+    page.on('console', (msg)=> console.log('browser', msg))
+    const result = await page.evaluate(()=> {
+        console.log(document.title)
+        //return document.title;
+    })
+})
+
+
 test('Ví dụ về evaluate', async ({ page }) => {
     await page.goto('https://demoapp-sable-gamma.vercel.app/')
     await page.getByRole('link', { name: 'Bài 5: Shadow DOM & iFrame' }).click()
@@ -194,6 +207,16 @@ test('Ví dụ về evaluate - tiếp theo', async ({ page }) => {
     })
     console.log(selection); // { selectionStart : 0, selectionEnd : 5 , selectionDirection : 'forward'}
 
+    //4) Thay thế đoạn đã chọn bằng chuỗi khác (mô phỏng user gõ)
+    await input.type('Hi') //lúc này value là Hi Playwright
+
+    //5) Chọn từ vị trí 3 đến hết và xóa
+    await input.evaluate((el: HTMLInputElement)=> {
+        el.setSelectionRange(3, el.value.length, 'backward')
+    })
+
+    await page.keyboard.press('Delete')
+
     await page.pause()
 })
 
@@ -207,43 +230,39 @@ test('Ví dụ về evaluate - đọc style', async ({ page }) => {
     const element = page.locator('#style-demo-element')
 
     // Đọc một style property
-    // const backgroundColor = await element.evaluate((el : HTMLElement)=> {
-    //     return window.getComputedStyle(el).backgroundColor
-    // })
-    // console.log('Background color:', backgroundColor);
+    const backgroundColor = await element.evaluate((el : HTMLElement)=> {
+        return window.getComputedStyle(el).backgroundColor
+    })
+    console.log('Background color:', backgroundColor);
 
     // Đọc nhiều style cùng lúc 
-    const styles = await element.evaluate((el: HTMLElement) => {
-        const computed = window.getComputedStyle(el)
-        return {
-            backgroundColor: computed.backgroundColor,
-            color: computed.color,
-            fontSize: computed.fontSize,
-            fontWeight: computed.fontWeight,
-            padding: computed.padding,
-            border: computed.border,
-            borderRadius: computed.borderRadius,
-        }
-    })
-    console.log('All styles:', styles);
+    // const styles = await element.evaluate((el: HTMLElement) => {
+    //     const computed = window.getComputedStyle(el)
+    //     return {
+    //         backgroundColor: computed.backgroundColor,
+    //         color: computed.color,
+    //         fontSize: computed.fontSize,
+    //         fontWeight: computed.fontWeight,
+    //         padding: computed.padding,
+    //         border: computed.border,
+    //         borderRadius: computed.borderRadius,
+    //     }
+    // })
+    // console.log('All styles:', styles);
 })
 
 
 
 async function isImageOK(page: Page, imgLocator: string): Promise<boolean> {
-    // await page.locator(imgLocator).waitFor({state: 'visible'})
-    // await page.waitForTimeout(2000)
-    page.on('console', (msg)=> {console.log('[browser]', msg)})
-    const result = await page.locator(imgLocator).evaluate((img: HTMLImageElement) => {
-        console.log('width : ', img.naturalWidth)
-        console.log('height : ', img.naturalHeight)
-        //logic check ảnh : 
-        //img.complete : trình duyệt đã tải xong(thành công or thất bại)
-        //img.naturalWidth > 0 : chiều rộng gốc của ảnh > 0
-        //img.natureHeight > 0 : chiều cao gốc của ảnh > 0
-        return img.complete && img.naturalWidth > 0 && img.naturalHeight > 0
-    });
-    return result;
+    const img = page.locator(imgLocator)
+    await expect(img).toBeVisible()
+    await expect(img).toHaveJSProperty('complete', true)
+
+    return await img.evaluate((el: HTMLImageElement)=> {
+        console.log(el.naturalWidth)
+        console.log(el.naturalHeight)
+        return el.naturalWidth > 0 && el.naturalHeight > 0
+    })
 }
 
 
@@ -251,6 +270,7 @@ test('Ví dụ về brokenImage', async ({ page }) => {
     await page.goto('https://demoapp-sable-gamma.vercel.app/')
     await page.getByRole('link', { name: 'Bài 5: Shadow DOM & iFrame' }).click()
     await page.getByRole('tab', { name: '🖼️ Broken Images' }).click()
+    page.on('console', (msg)=> console.log('[BROWSER]', msg.text()))
     // const checkImage = await isImageOK(page, "//img[@alt='Vite Logo']")
     // expect(checkImage).toBeTruthy()
 
