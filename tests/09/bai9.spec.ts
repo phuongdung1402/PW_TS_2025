@@ -4,8 +4,8 @@ import {addDays, differenceInDays, format, getMonth, subDays, parse, getYear, is
 test('Ví dụ data picker', ()=> {
     //Date là 1 obj o trong JS/TS
     //HN+7 -> UTC - 7
-    // const now = new Date()
-    // console.log(now)
+    const now = new Date()
+    console.log(now)
     // console.log(now.getFullYear())
     // console.log(now.getMonth()+1)
     // console.log(now.getDate())
@@ -26,8 +26,8 @@ test('Ví dụ data picker', ()=> {
     // const today2 = new Date('2025-11-06')
     // const inTenDays = addDays(today2, 10)
     // const insubDays = subDays(today2, 3)
-    // console.log(insubDays)
     // console.log(inTenDays)
+    // console.log(insubDays)
 
     // const dateA = new Date('2025-11-11')
     // const dateB = new Date('2025-11-06')
@@ -120,7 +120,7 @@ test('ví dụ date picker2', async ({ page }) => {
 
   await page.getByRole('link', { name: 'Bài 4: Mouse Actions' }).click();
   await page.getByText('📅 jQuery Date Picker', { exact: true }).click();
-  const lastMonth = new Date();
+  const lastMonth = new Date(); 
   lastMonth.setMonth(lastMonth.getMonth() - 1);
   const y = lastMonth.getFullYear();
   //yyyy/mm/dd
@@ -129,4 +129,5 @@ test('ví dụ date picker2', async ({ page }) => {
   const d = '15';
   const ymd = `${y}-${m}-${d}`;
   await selectDateDemo2(page, ymd);
+  await page.pause()
 });
