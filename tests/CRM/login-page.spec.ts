@@ -15,7 +15,8 @@ test.describe('HRM Login Page - Positive case', ()=> {
 
         await page.locator('#iusername').fill('admin_example')
         await page.locator('#ipassword').fill('123456')
-        await page.getByRole('button', {name: ' Login'}).click()
+        //await page.getByRole('button', {name: ' Login'}).click()
+        //await page.keyboard.press('Enter')
 
         await expect(page.locator('#swal2-title')).toContainText('Logged In Successfully.')
         await expect(page).toHaveURL('https://hrm.anhtester.com/erp/desk')

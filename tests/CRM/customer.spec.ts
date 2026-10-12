@@ -16,11 +16,8 @@ function createRandomUser() {
         state:faker.location.state(),
         zipcode: faker.location.zipCode(),
         country: 'Vietnam'
-
     }
-
 }
-
 
 async function loginAndNavigateToNewCustomer(page: Page, tabName: string) {
     await page.goto(LOGIN_URL)
@@ -32,7 +29,6 @@ async function loginAndNavigateToNewCustomer(page: Page, tabName: string) {
     await expect(page.getByRole('img', {name: 'Perfex CRM | Anh Tester Demo'})).toBeVisible()
     await page.locator(`//span[normalize-space(.)='${tabName}']//parent::a`).click()
     await page.getByRole('link', {name: 'New Customer'}).click()
-
 }
 
 
@@ -83,8 +79,7 @@ test.describe('CRM Customer Page - Positive case', () => {
         await expect(page.locator('#vat')).toHaveValue(information.vatNumber)
         const dropdownText = await page.locator('button[data-id="default_currency"]').getAttribute('title')
         expect(dropdownText).toContain(information.currency)
-        await page.pause()
-       
+        await page.pause() 
     })
 
 
@@ -108,8 +103,7 @@ test.describe('CRM Customer Page - Positive case', () => {
         await page.getByRole('tab', {name: 'Billing & Shipping'}).click()
         await page.getByText('Same as Customer Info').click()
         await expect(page.locator('#billing_street')).toHaveValue(information.address)
-        await page.pause()
-       
+        await page.pause()   
     })
 
 

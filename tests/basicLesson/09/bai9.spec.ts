@@ -12,16 +12,15 @@ test('Ví dụ data picker', ()=> {
     
 
     //yyyy-mm-ddT
-    // const specificDate = new Date('2025-01-30T10:00:00') 
-    // console.log(specificDate)
+    const specificDate = new Date('2025-01-30T10:00:00') 
+    console.log(specificDate)
 
-    // const today = new Date()
-    // const formatDate = format(today, 'dd/MM/yyyy')
-    // console.log(formatDate)
-
-
-    // const formatedTime = format(today, 'HH:mm:ss')
-    // console.log(formatedTime)
+    const today = new Date()
+    const formatDate = format(today, 'dd/MM/yyyy')
+    console.log(formatDate)
+    
+    const formatedTime = format(today, 'HH:mm:ss')
+    console.log(formatedTime)
 
     // const today2 = new Date('2025-11-06')
     // const inTenDays = addDays(today2, 10)
