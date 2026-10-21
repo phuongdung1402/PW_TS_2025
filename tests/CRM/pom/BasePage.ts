@@ -9,14 +9,43 @@ export abstract class BasePage {
         console.log(`[Click] ${elementInfo}`)
     }
 
-    protected async logFill(locator: Locator) {
+    protected async logFill(locator: Locator, value?: string) {
         const elementInfo = await this.getElementInfo(locator)
-        console.log(`[Fill] ${elementInfo}`)
+        const valueInfo = value ? `with value ${value}` : ''
+        console.log(`[Fill] ${elementInfo} ${valueInfo}`)
     }
 
+    protected async fillWithLog(locator: Locator, value: string, options? : {isSensitive?: boolean, fillOptions?: Parameters<Locator['fill']>[1]}) {
+        let isSensitive = options?.isSensitive
+        const logValue = isSensitive ? '***' : value
+        await this.logFill(locator, logValue)
+        await locator.fill(value, options?.fillOptions)
+    }
+
+    protected async clickWithLog(locator: Locator, options?: Parameters<Locator['click']>[0]) {
+        await this.logClick(locator)
+        await locator.click()
+    }
 
     private async getElementInfo(locator: Locator): Promise<string> {
-        const text = await locator.innerText().catch(()=> '')
+        let text = ''
+
+        try {
+            text = await locator.innerText()
+            text = text.trim()
+        } catch {
+            try {
+                const textContent = await locator.textContent()
+                text = textContent?.trim() || ''
+            } catch {
+                try {
+                    const value = await locator.inputValue()
+                    if(value) {
+                        text = `value = ${value}`
+                    }
+                } catch{}
+            }
+        }
         return text
     }
 

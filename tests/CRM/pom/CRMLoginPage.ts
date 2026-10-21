@@ -20,12 +20,16 @@ export class CRMLoginPage extends BasePage {
     }
 
     async login(email: string , password: string) {
-        this.logFill(this.emailInput)
-        await this.emailInput.fill(email)
-        this.logFill(this.passwordInput)
-        await this.passwordInput.fill(password)
-        this.logClick(this.loginButton)
-        await this.loginButton.click()     
+        // this.logFill(this.emailInput)
+        // await this.emailInput.fill(email)
+        // this.logFill(this.passwordInput)
+        // await this.passwordInput.fill(password)
+        // this.logClick(this.loginButton)
+        // await this.loginButton.click()     
+
+        await this.fillWithLog(this.emailInput, email)
+        await this.fillWithLog(this.passwordInput, password, {isSensitive: true, fillOptions: {timeout: 10000}})
+        await this.clickWithLog(this.loginButton, {timeout: 10000})
     }
 
     async expectLoggedIn() {
