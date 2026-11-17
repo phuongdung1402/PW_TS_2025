@@ -10,7 +10,7 @@ export class CRMDashboardPage extends BasePage {
         logo : '#logo',
         searchInput : (page: Page) => page.getByRole('searchbox', {name: 'Search...', exact: true}),
         dashboardLink : (page: Page) => page.getByRole('link', {name: 'Dashboard'})
-    }
+    } as const
 
     //public element = this.get(this.pageLocators, 'logo')
     public element = this.createLocatorGetter(this.pageLocators)
